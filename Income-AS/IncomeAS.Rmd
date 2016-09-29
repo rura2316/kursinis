@@ -1,0 +1,60 @@
+---
+title: "Kursinis"
+author: "Izabele Vilkinaite"
+date: '2016 m rugsėjis 29 d '
+output: html_document
+---
+
+##Aprašomoji statistika 
+
+```{r}
+data = read.csv2(file="income.csv", header=T)
+```
+
+##Daugiamatė ANOVA (tikriname ar vidurkiai statistiškai reikšmingai skiriasi)
+```{r}
+income =as.vector(t(data[,-1]))
+salis = as.character(rep((data[,1]),each=8))
+data2 = data.frame(income, salis)
+fit1 = aov(income~salis, data2)
+par(mfrow=c(2,2))
+plot(fit1)
+summary(fit1)
+```
+
+###Kadangi p-value < 0.05, H0 hipotezę atmetame, tai vidurkiai tarp šalių statistiškai reikšmingai skiriasi. 
+
+#Bendra
+```{r}
+summary(income)
+```
+#Vidurkis
+```{r}
+mean(income)
+```
+#Mediana
+```{r}
+median(income)
+```
+#Moda
+```{r}
+Mode = function(income){
+  dazniai = data.frame(table(income))
+  if(dazniai$Freq!=1){
+   names(table(income))[table(income)==max(table(income))] 
+  } else {
+    "Visos reikšmės yra skirtingos"
+  }
+}
+Mode(income)
+```
+#Standartinis nuokrypis
+```{r}
+sd(income)
+```
+#Duomenų išbrėžimas
+```{r}
+y=rowMeans(data[,-1])
+x=factor(data[,1])
+plot(x, y, type="h", main="Mean of median equivalised net income", las=2)
+```
