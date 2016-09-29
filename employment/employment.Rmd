@@ -1,0 +1,55 @@
+---
+title: "Kursinis"
+author: "Rūta Radavičiūtė, Izabalė Vilkinaitė"
+date: "Thursday, September 29, 2016"
+output: html_document
+---
+
+##Aprašomoji statistika 
+
+```{r}
+data8 = read.csv(file="employment.csv", header=T)
+```
+
+##Youth employment rate by sex, age and country of birth
+
+##Daugiamatė ANOVA (tikriname ar vidurkiai statistiškai reikšmingai skiriasi)
+```{r}
+employment =as.vector(t(data8[,-1]))
+salis = as.character(rep((data8[,1]),each=8))
+dat8 = data.frame(employment, salis)
+fit8 = aov(employment~salis, dat8)
+par(mfrow=c(2,2))
+plot(fit8)
+summary(fit8)
+```
+
+###Kadangi p-value < 0.05, H0 hipotezę atmetame, tai vidurkiai tarp šalių statistiškai reikšmingai skiriasi. 
+
+#Bendra
+```{r}
+summary(employment)
+```
+#Vidurkis
+```{r}
+mean(employment)
+```
+#Mediana
+```{r}
+median(employment)
+```
+#Moda
+```{r}
+library(modeest)
+mlv(employment, method = "mfv")
+```
+#Standartinis nuokrypis
+```{r}
+sd(employment)
+```
+#Duomenų išbrėžimas
+```{r}
+y=rowMeans(data8[,-1])
+x=factor(data8[,1])
+plot(x, y, type="h", main="Mean of youth employment rate", las=2)
+```
