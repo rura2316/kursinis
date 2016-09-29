@@ -1,0 +1,56 @@
+---
+title: "Kursinis"
+author: "Rūta Radavičiūtė, Izabalė Vilkinaitė"
+date: "Thursday, September 29, 2016"
+output: html_document
+---
+
+##Aprašomoji statistika 
+
+```{r}
+data2 = read.csv(file="poverty.csv", header=T)
+```
+
+At-risk-of-poverty rate by poverty threshold, age and sex - EU-SILC survey
+At risk of poverty rate (cut-off point: 60% of median equivalised income after social transfers)
+
+##Daugiamatė ANOVA (tikriname ar vidurkiai statistiškai reikšmingai skiriasi)
+```{r}
+poverty =as.vector(t(data2[,-1]))
+salis = as.character(rep((data2[,1]),each=8))
+dat2 = data.frame(poverty, salis)
+fit2 = aov(poverty~salis, dat2)
+par(mfrow=c(2,2))
+plot(fit2)
+summary(fit2)
+```
+
+###Kadangi p-value < 0.05, H0 hipotezę atmetame, tai vidurkiai tarp šalių statistiškai reikšmingai skiriasi. 
+
+#Bendra
+```{r}
+summary(poverty)
+```
+#Vidurkis
+```{r}
+mean(poverty)
+```
+#Mediana
+```{r}
+median(poverty)
+```
+#Moda
+```{r}
+library(modeest)
+mlv(poverty, method = "mfv")
+```
+#Standartinis nuokrypis
+```{r}
+sd(poverty)
+```
+#Duomenų išbrėžimas
+```{r}
+y=rowMeans(data2[,-1])
+x=factor(data2[,1])
+plot(x, y, type="h", main="Mean of at risk of poverty rate", las=2)
+```
