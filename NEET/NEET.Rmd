@@ -1,0 +1,109 @@
+---
+title: "Kursinis"
+author: "Rūta Radavičiūtė, Izabalė Vilkinaitė"
+date: "Thursday, September 29, 2016"
+output: html_document
+---
+
+##Aprašomoji statistika 
+
+```{r}
+data4 = read.csv(file="inactive.csv", header=T)
+```
+
+Young people neither in employment nor in education and training by sex, age and labour status (NEET rates)
+Neither formal nor non-formal education and training
+##Inactive persons
+
+##Daugiamatė ANOVA (tikriname ar vidurkiai statistiškai reikšmingai skiriasi)
+```{r}
+inactive =as.vector(t(data4[,-1]))
+salis = as.character(rep((data4[,1]),each=8))
+dat4 = data.frame(inactive, salis)
+fit4 = aov(inactive~salis, dat4)
+par(mfrow=c(2,2))
+plot(fit4)
+summary(fit4)
+```
+
+###Kadangi p-value < 0.05, H0 hipotezę atmetame, tai vidurkiai tarp šalių statistiškai reikšmingai skiriasi. 
+
+#Bendra
+```{r}
+summary(inactive)
+```
+#Vidurkis
+```{r}
+mean(inactive)
+```
+#Mediana
+```{r}
+median(inactive)
+```
+#Moda
+```{r}
+library(modeest)
+mlv(inactive, method = "mfv")
+```
+#Standartinis nuokrypis
+```{r}
+sd(inactive)
+```
+#Duomenų išbrėžimas
+```{r}
+y=rowMeans(data4[,-1])
+x=factor(data4[,1])
+plot(x, y, type="h", main="Mean of inactive persons", las=2)
+```
+
+
+##Aprašomoji statistika 
+
+```{r}
+data6 = read.csv(file="seeking.csv", header=T)
+```
+
+Young people neither in employment nor in education and training by sex, age and labour status (NEET rates)
+Neither formal nor non-formal education and training
+##Persons would like to work (seeking employment or not)
+
+##Daugiamatė ANOVA (tikriname ar vidurkiai statistiškai reikšmingai skiriasi)
+```{r}
+seeking =as.vector(t(data6[,-1]))
+salis = as.character(rep((data6[,1]),each=8))
+dat6 = data.frame(seeking, salis)
+fit6 = aov(seeking~salis, dat6)
+par(mfrow=c(2,2))
+plot(fit6)
+summary(fit6)
+```
+
+###Kadangi p-value < 0.05, H0 hipotezę atmetame, tai vidurkiai tarp šalių statistiškai reikšmingai skiriasi. 
+
+#Bendra
+```{r}
+summary(seeking)
+```
+#Vidurkis
+```{r}
+mean(seeking)
+```
+#Mediana
+```{r}
+median(seeking)
+```
+#Moda
+```{r}
+library(modeest)
+mlv(seeking, method = "mfv")
+```
+#Standartinis nuokrypis
+```{r}
+sd(seeking)
+```
+#Duomenų išbrėžimas
+```{r}
+y=rowMeans(data6[,-1])
+x=factor(data6[,1])
+plot(x, y, type="h", main="Mean of persons would like to work", las=2)
+```
